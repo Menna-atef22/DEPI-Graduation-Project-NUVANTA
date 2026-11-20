@@ -5,4 +5,8 @@
     <Project Path="backend/Nuvanta.Domain/Nuvanta.Domain.csproj" />
     <Project Path="backend/Nuvanta.Infrastructure/Nuvanta.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Nuvanta.IntegrationTests/Nuvanta.IntegrationTests.csproj" />
+    <Project Path="tests/Nuvanta.UnitTests/Nuvanta.UnitTests.csproj" />
+  </Folder>
 </Solution>
