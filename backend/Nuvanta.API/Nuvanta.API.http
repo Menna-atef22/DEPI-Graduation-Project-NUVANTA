@@ -1,6 +1,27 @@
-@Nuvanta.API_HostAddress = http://localhost:5066
+@host = http://localhost:5066
 
-GET {{Nuvanta.API_HostAddress}}/weatherforecast/
-Accept: application/json
+### 1) API alive?
+GET {{host}}/api/health
 
-###
+### 2) Connect to SQL Server + read all 41 tables
+GET {{host}}/api/health/database
+
+### 3) Companies (seed data: Advanced Technology LLC)
+GET {{host}}/api/companies
+
+### 4) One company
+GET {{host}}/api/companies/1
+
+### 5) Departments of company 1 (seed: Finance, Procurement)
+GET {{host}}/api/companies/1/departments
+
+### 6) Create a company (write test)
+POST {{host}}/api/companies
+Content-Type: application/json
+
+{
+  "companyName": "Test Company",
+  "currencyCode": "EGP",
+  "email": "test@example.com",
+  "country": "Egypt"
+}
