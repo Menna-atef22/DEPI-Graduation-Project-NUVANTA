@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/Nuvanta.API/Nuvanta.API.csproj" />
+    <Project Path="backend/Nuvanta.Application/Nuvanta.Application.csproj" />
+    <Project Path="backend/Nuvanta.Domain/Nuvanta.Domain.csproj" />
+    <Project Path="backend/Nuvanta.Infrastructure/Nuvanta.Infrastructure.csproj" />
+  </Folder>
+</Solution>

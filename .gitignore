@@ -1,0 +1,43 @@
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# .NET Build
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# Secrets
+.env
+.env.*
+!.env.example
+secrets.json
+secrets.*.json
+*.pfx
+*.key
+*.publishsettings
+*.publish.xml
+
+# Local settings
+appsettings.Development.json
+appsettings.Local.json
+
+# Frontend
+node_modules/
+dist/
+build/
+.next/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+TestResults/
+
+# OS
+.DS_Store
+Thumbs.db
+
