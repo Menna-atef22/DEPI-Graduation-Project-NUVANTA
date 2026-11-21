@@ -1,0 +1,10 @@
+
+.active-link {
+  background-color: #269b72;
+  color: white;
+  font-weight: 600;
+}
+
+.active-link:hover {
+  background-color: #218b65;
+}

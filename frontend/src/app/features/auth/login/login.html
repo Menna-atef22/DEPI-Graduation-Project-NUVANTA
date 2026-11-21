@@ -1,0 +1,69 @@
+<div class="min-h-screen bg-slate-900 flex items-center justify-center p-5 relative overflow-hidden">
+
+  <div class="absolute w-96 h-96 rounded-full bg-teal-500/10 blur-3xl -top-32 -left-20"></div>
+  <div class="absolute w-96 h-96 rounded-full bg-blue-500/10 blur-3xl -bottom-32 -right-20"></div>
+
+  <div class="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 text-2xl font-extrabold mb-4">
+        N
+      </div>
+
+      <h1 class="text-3xl font-extrabold text-slate-900 tracking-wide">NUVANTA</h1>
+      <p class="text-sm text-slate-400 mt-2">Enterprise Financial & Operations Management</p>
+    </div>
+
+    <div class="mb-7">
+      <h2 class="text-2xl font-bold text-slate-800">Welcome Back</h2>
+      <p class="text-sm text-slate-500 mt-2">Sign in to access your workspace.</p>
+    </div>
+
+    <form (ngSubmit)="login()" class="space-y-5">
+
+      <label class="block text-sm font-semibold text-slate-600">
+        Email Address
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          placeholder="admin@nuvanta.com"
+          class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3.5 outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10">
+      </label>
+
+      <label class="block text-sm font-semibold text-slate-600">
+        Password
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          placeholder="Enter your password"
+          class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3.5 outline-none focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10">
+      </label>
+
+      @if (error) {
+        <p class="text-sm text-rose-600">{{ error }}</p>
+      }
+
+      <button
+        type="submit"
+        class="w-full rounded-xl bg-teal-600 py-3.5 text-white font-bold shadow-lg shadow-teal-600/20 hover:bg-teal-700 transition">
+        Sign In
+      </button>
+
+    </form>
+
+    <div class="mt-6 rounded-xl bg-slate-50 p-4">
+      <p class="text-xs font-bold text-slate-500">DEMO ACCESS</p>
+      <p class="text-xs text-slate-500 mt-2">Email: admin@nuvanta.com</p>
+      <p class="text-xs text-slate-500 mt-1">Password: 123456</p>
+    </div>
+
+    <p class="text-center text-xs text-slate-400 mt-7">
+      © 2026 NUVANTA. All rights reserved.
+    </p>
+
+  </div>
+</div>

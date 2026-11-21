@@ -1,0 +1,923 @@
+
+<div class="space-y-6">
+
+  <!-- Page Heading -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">{{ title }}</h1>
+      <p class="text-sm text-slate-500 mt-1">{{ subtitle }}</p>
+    </div>
+
+    @if (fields.length > 0 || module === 'budget') {
+      <button
+        type="button"
+        (click)="openAddForm()"
+        class="rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-teal-600/20 hover:bg-teal-700 transition">
+
+        + {{ module === 'budget' ? 'Create Budget' : module === 'purchase-requests' ? 'Create Request' : 'Add New' }}
+      </button>
+    }
+  </div>
+
+  <!-- Settings Page -->
+  @if (module === 'settings') {
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+      <!-- Profile Information -->
+      <section class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
+
+        <h2 class="font-bold text-slate-800 text-lg">
+          Profile Information
+        </h2>
+
+        <p class="text-sm text-slate-400 mt-1 mb-6">
+          Update your personal details.
+        </p>
+
+        <div class="space-y-4">
+
+          <label class="block text-sm text-slate-600">
+            Full Name
+
+            <input
+              [(ngModel)]="settings.fullName"
+              name="settingsFullName"
+              required
+              class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-teal-500">
+          </label>
+
+          <label class="block text-sm text-slate-600">
+            Email Address
+
+            <input
+              type="email"
+              [(ngModel)]="settings.email"
+              name="settingsEmail"
+              required
+              class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-teal-500">
+          </label>
+
+          <label class="block text-sm text-slate-600">
+            Job Title
+
+            <input
+              [(ngModel)]="settings.jobTitle"
+              name="settingsJobTitle"
+              required
+              class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-teal-500">
+          </label>
+
+        </div>
+      </section>
+
+      <!-- Company Information -->
+      <section class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
+
+        <h2 class="font-bold text-slate-800 text-lg">
+          Company Information
+        </h2>
+
+        <p class="text-sm text-slate-400 mt-1 mb-6">
+          Manage your company details.
+        </p>
+
+        <div class="space-y-4">
+
+          <label class="block text-sm text-slate-600">
+            Company Name
+
+            <input
+              [(ngModel)]="settings.companyName"
+              name="companyName"
+              required
+              class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-teal-500">
+          </label>
+
+          <label class="block text-sm text-slate-600">
+            Currency
+
+            <select
+              [(ngModel)]="settings.currency"
+              name="currency"
+              class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-teal-500">
+
+              <option value="EGP">EGP - Egyptian Pound</option>
+              <option value="USD">USD - US Dollar</option>
+
+            </select>
+          </label>
+
+          <label class="block text-sm text-slate-600">
+            Time Zone
+
+            <select
+              [(ngModel)]="settings.timeZone"
+              name="timeZone"
+              class="mt-2 w-full rounded-xl border border-slate-200 p-3 outline-none focus:border-teal-500">
+
+              <option value="Africa/Cairo">Africa/Cairo</option>
+              <option value="UTC">UTC</option>
+
+            </select>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section class="xl:col-span-2 rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
+
+        <h2 class="font-bold text-slate-800 text-lg">
+          Notifications
+        </h2>
+
+        <div class="mt-5 space-y-4">
+
+          <label class="flex items-center justify-between gap-4 text-sm text-slate-600">
+            Email notifications
+
+            <input
+              [(ngModel)]="settings.emailNotifications"
+              name="emailNotifications"
+              type="checkbox"
+              class="accent-teal-600 w-4 h-4">
+          </label>
+
+          <label class="flex items-center justify-between gap-4 text-sm text-slate-600">
+            Approval reminders
+
+            <input
+              [(ngModel)]="settings.approvalReminders"
+              name="approvalReminders"
+              type="checkbox"
+              class="accent-teal-600 w-4 h-4">
+          </label>
+
+          <label class="flex items-center justify-between gap-4 text-sm text-slate-600">
+            Low stock alerts
+
+            <input
+              [(ngModel)]="settings.lowStockAlerts"
+              name="lowStockAlerts"
+              type="checkbox"
+              class="accent-teal-600 w-4 h-4">
+          </label>
+
+        </div>
+
+        <button
+          type="button"
+          (click)="saveSettings()"
+          class="mt-6 rounded-xl bg-teal-600 px-6 py-3 text-sm font-semibold text-white hover:bg-teal-700">
+
+          Save Changes
+        </button>
+
+      </section>
+
+    </div>
+
+  } @else {
+
+    <!-- Metrics Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+
+      @for (metric of metrics; track metric.label) {
+
+        <div class="rounded-2xl bg-white border border-slate-100 shadow-sm p-5">
+
+          <div class="flex items-center justify-between">
+
+            <p class="text-sm text-slate-500">
+              {{ metric.label }}
+            </p>
+
+            <span class="h-9 w-9 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+              ▦
+            </span>
+
+          </div>
+
+          <h2 class="text-2xl font-bold text-slate-800 mt-3">
+            {{ metric.value }}
+          </h2>
+
+          <p class="text-xs text-slate-400 mt-2">
+            {{ metric.note }}
+          </p>
+
+        </div>
+      }
+
+    </div>
+
+    <!-- Budget Allocation -->
+    @if (module === 'budget') {
+
+      <section class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
+
+        <div class="flex items-center justify-between mb-5">
+
+          <div>
+            <h2 class="font-bold text-slate-800">
+              Department Budget Allocation
+            </h2>
+
+            <p class="text-sm text-slate-400 mt-1">
+              Budget utilization by department
+            </p>
+          </div>
+
+          <span class="text-xs font-semibold bg-teal-50 text-teal-700 px-3 py-2 rounded-lg">
+            Annual Plan
+          </span>
+
+        </div>
+
+        <div class="space-y-5">
+
+          @for (row of rows; track row.department) {
+
+            <div>
+
+              <div class="flex justify-between gap-3 text-sm mb-2">
+
+                <span class="font-medium text-slate-700">
+                  {{ row.department }}
+                </span>
+
+                <span class="text-slate-500">
+                  {{ row.progress }}
+                </span>
+
+              </div>
+
+              <div class="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+
+                <div
+                  class="h-full rounded-full bg-teal-500"
+                  [style.width]="row.progress">
+                </div>
+
+              </div>
+
+            </div>
+          }
+
+        </div>
+      </section>
+    }
+
+    <!-- Inventory Stock Movements -->
+    @if (module === 'inventory') {
+
+      <section class="rounded-2xl bg-white border border-slate-100 shadow-sm p-5">
+
+        <h2 class="font-bold text-slate-800">
+          Stock Movements
+        </h2>
+
+        <p class="text-sm text-slate-500 mt-1">
+          Demo placeholder for incoming and outgoing stock records.
+          No live warehouse integration.
+        </p>
+
+      </section>
+    }
+
+    <!-- Search and Filters -->
+    <section class="rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden">
+
+      <div class="p-5 md:p-6 border-b border-slate-100 flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+
+        <div>
+
+          <h2 class="font-bold text-slate-800">
+            All {{ title }}
+          </h2>
+
+          <p class="text-xs text-slate-400 mt-1">
+            {{ filteredRows.length }} records found
+          </p>
+
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+
+          <!-- Search -->
+          <input
+            [(ngModel)]="search"
+            placeholder="Search..."
+            class="w-full sm:w-64 rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-teal-500">
+
+          <!-- Status Filter -->
+          @if (statuses.length > 1) {
+
+            <select
+              [(ngModel)]="filter"
+              name="statusFilter"
+              class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-teal-500">
+
+              @for (status of statuses; track status) {
+
+                <option [value]="status">
+                  {{ status === 'All' ? 'All Statuses' : status }}
+                </option>
+
+              }
+
+            </select>
+          }
+
+          <!-- Role Filter -->
+          @if (module === 'users' && roles.length > 1) {
+
+            <select
+              [(ngModel)]="roleFilter"
+              name="roleFilter"
+              class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-teal-500">
+
+              @for (role of roles; track role) {
+
+                <option [value]="role">
+                  {{ role === 'All' ? 'All Roles' : role }}
+                </option>
+
+              }
+
+            </select>
+          }
+
+          <!-- Low Stock Filter -->
+          @if (module === 'inventory') {
+
+            <button
+              type="button"
+              (click)="filter = filter === 'Low Stock' ? 'All' : 'Low Stock'"
+              class="rounded-xl border border-slate-200 px-4 py-2.5 text-sm">
+
+              {{ filter === 'Low Stock' ? 'Show All Stock' : 'Low Stock Only' }}
+
+            </button>
+          }
+
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-sm text-left whitespace-nowrap">
+
+          <thead class="bg-slate-50 text-slate-500">
+
+            <tr>
+
+              @for (column of columns; track column.key) {
+
+                <th class="px-6 py-4 font-semibold">
+                  {{ column.label }}
+                </th>
+
+              }
+
+              <th class="px-6 py-4 font-semibold">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody class="divide-y divide-slate-100">
+
+            @for (row of filteredRows; track $index) {
+
+              <tr class="hover:bg-slate-50/80 transition">
+
+                @for (column of columns; track column.key) {
+
+                  <td class="px-6 py-4 text-slate-600">
+
+                    @if (column.key === 'status') {
+
+                      <span
+                        class="rounded-full px-3 py-1 text-xs font-semibold"
+                        [ngClass]="statusClass(row[column.key])">
+
+                        {{ row[column.key] }}
+
+                      </span>
+
+                    } @else {
+
+                      <span
+                        [class.font-semibold]="column.key === 'id' || column.key === 'name'"
+                        [class.text-slate-800]="column.key === 'id' || column.key === 'name'">
+
+                        {{ displayValue(row, column.key) }}
+
+                      </span>
+
+                    }
+
+                  </td>
+
+                }
+
+                <td class="px-6 py-4">
+
+                  <button
+                    type="button"
+                    (click)="openDetails(row)"
+                    class="text-teal-700 font-semibold hover:text-teal-900">
+
+                    View Details
+
+                  </button>
+
+                </td>
+
+              </tr>
+
+            } @empty {
+
+              <tr>
+
+                <td
+                  [attr.colspan]="columns.length + 1"
+                  class="px-6 py-12 text-center text-slate-400">
+
+                  No records found.
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- Approvals Demo Notice -->
+    @if (module === 'approvals') {
+
+      <p class="text-xs text-slate-400">
+        Demo mode: approval actions only change the displayed request status.
+        No real transaction is created.
+      </p>
+
+    }
+
+    <!-- Payments Demo Notice -->
+    @if (module === 'payments') {
+
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl bg-amber-50 p-4">
+
+        <p class="text-xs text-amber-800">
+          Demo mode only. This page displays payment records and does not transfer real money.
+        </p>
+
+        <button
+          type="button"
+          disabled
+          class="rounded-lg bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-500 cursor-not-allowed">
+
+          Pay Supplier (Disabled)
+
+        </button>
+
+      </div>
+
+    }
+
+  }
+
+</div>
+
+<!-- Add Form Modal -->
+@if (showForm) {
+
+  <div class="fixed inset-0 z-50 bg-slate-950/50 flex items-center justify-center p-4">
+
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+
+      <div class="flex items-center justify-between mb-6">
+
+        <div>
+
+          <h2 class="text-xl font-bold text-slate-800">
+            {{ module === 'budget' ? 'Create Budget' : module === 'purchase-requests' ? 'Create Purchase Request' : 'Add New Record' }}
+          </h2>
+
+          <p class="text-sm text-slate-400 mt-1">
+            Enter the required information below.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          (click)="showForm = false"
+          class="text-2xl text-slate-400 hover:text-slate-700">
+
+          ×
+
+        </button>
+
+      </div>
+
+      <!-- Budget Form -->
+      @if (module === 'budget') {
+
+        <form
+          #budgetForm="ngForm"
+          (ngSubmit)="saveBudget()"
+          class="space-y-4">
+
+          <label class="block text-sm font-medium text-slate-600">
+
+            Period
+
+            <select
+              [(ngModel)]="budgetPeriod"
+              name="budgetPeriod"
+              required
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3">
+
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="Q1 2027">Q1 2027</option>
+              <option value="Q2 2027">Q2 2027</option>
+              <option value="Q3 2027">Q3 2027</option>
+              <option value="Q4 2027">Q4 2027</option>
+
+            </select>
+
+          </label>
+
+          <label class="block text-sm font-medium text-slate-600">
+
+            Total Amount (EGP)
+
+            <input
+              [(ngModel)]="budgetTotalAmount"
+              name="budgetTotalAmount"
+              type="number"
+              min="1"
+              required
+              class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3">
+
+          </label>
+
+          <div class="border-t border-slate-100 pt-4">
+
+            <div class="flex items-center justify-between mb-3">
+
+              <h3 class="font-semibold text-slate-800">
+                Department / Category Allocations
+              </h3>
+
+              <button
+                type="button"
+                (click)="addAllocation()"
+                class="text-sm font-semibold text-teal-700">
+
+                + Add row
+
+              </button>
+
+            </div>
+
+            @for (allocation of allocations; track $index) {
+
+              <div class="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-3 mb-3">
+
+                <input
+                  [(ngModel)]="allocation.department"
+                  [name]="'allocationDepartment' + $index"
+                  placeholder="Department / Category"
+                  required
+                  class="min-w-0 rounded-xl border border-slate-200 px-3 py-3 text-sm">
+
+                <input
+                  [(ngModel)]="allocation.amount"
+                  [name]="'allocationAmount' + $index"
+                  type="number"
+                  min="1"
+                  placeholder="Allocated amount"
+                  required
+                  class="min-w-0 rounded-xl border border-slate-200 px-3 py-3 text-sm">
+
+                <button
+                  type="button"
+                  (click)="removeAllocation($index)"
+                  [disabled]="allocations.length === 1"
+                  class="px-3 text-rose-600 disabled:opacity-30">
+
+                  ×
+
+                </button>
+
+              </div>
+
+            }
+
+            <div class="flex justify-between text-sm font-semibold">
+
+              <span>Total Allocations</span>
+
+              <span>
+                {{ formatCurrency(allocationTotal) }}
+              </span>
+
+            </div>
+
+            @if (budgetTotalAmount && allocationTotal > budgetTotalAmount) {
+
+              <p class="text-xs text-rose-600 mt-2">
+                Allocations exceed the total budget.
+              </p>
+
+            }
+
+          </div>
+
+          <div class="flex justify-end gap-3 pt-3">
+
+            <button
+              type="button"
+              (click)="showForm = false"
+              class="rounded-xl border border-slate-200 px-5 py-3 text-sm">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              [disabled]="budgetForm.invalid || allocationTotal <= 0 || allocationTotal > (budgetTotalAmount || 0)"
+              class="rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white disabled:opacity-40">
+
+              Save Budget
+
+            </button>
+
+          </div>
+
+        </form>
+
+      } @else {
+
+        <!-- General Form -->
+        <form
+          (ngSubmit)="addRecord()"
+          #recordForm="ngForm"
+          class="space-y-4">
+
+          @for (field of fields; track field.key) {
+
+            <label class="block text-sm font-medium text-slate-600">
+
+              {{ field.label }}
+
+              @if (field.options) {
+
+                <select
+                  [(ngModel)]="formData[field.key]"
+                  [name]="field.key"
+                  required
+                  class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-teal-500">
+
+                  <option value="" disabled>
+                    Select {{ field.label }}
+                  </option>
+
+                  @for (option of field.options; track option) {
+
+                    <option [value]="option">
+                      {{ option }}
+                    </option>
+
+                  }
+
+                </select>
+
+              } @else {
+
+                <input
+                  [(ngModel)]="formData[field.key]"
+                  [name]="field.key"
+                  [type]="field.type || 'text'"
+                  [min]="field.type === 'number' ? 1 : null"
+                  required
+                  class="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:border-teal-500">
+
+              }
+
+            </label>
+
+          }
+
+          <!-- Purchase Request Total -->
+          @if (module === 'purchase-requests') {
+
+            <div class="rounded-xl bg-teal-50 p-4 flex justify-between text-sm">
+
+              <span>Estimated Total</span>
+
+              <strong>
+                {{ formatCurrency(calculatedRequestAmount) }}
+              </strong>
+
+            </div>
+
+          }
+
+          <div class="flex justify-end gap-3 pt-3">
+
+            <button
+              type="button"
+              (click)="showForm = false"
+              class="rounded-xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-600">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              [disabled]="recordForm.invalid"
+              class="rounded-xl bg-teal-600 px-5 py-3 text-sm font-semibold text-white disabled:opacity-40">
+
+              Save Record
+
+            </button>
+
+          </div>
+
+        </form>
+
+      }
+
+    </div>
+
+  </div>
+
+}
+
+<!-- Details Modal -->
+@if (selected) {
+
+  <div class="fixed inset-0 z-50 bg-slate-950/50 flex items-center justify-center p-4">
+
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6">
+
+      <div class="flex items-center justify-between mb-5">
+
+        <h2 class="text-xl font-bold text-slate-800">
+          Record Details
+        </h2>
+
+        <button
+          type="button"
+          (click)="selected = null"
+          class="text-2xl text-slate-400">
+
+          ×
+
+        </button>
+
+      </div>
+
+      <div class="space-y-4">
+
+        @for (column of columns; track column.key) {
+
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-3 text-sm">
+
+            <span class="text-slate-400">
+              {{ column.label }}
+            </span>
+
+            <span class="font-semibold text-slate-700 text-right">
+              {{ displayValue(selected, column.key) }}
+            </span>
+
+          </div>
+
+        }
+
+        @if (selected.item) {
+
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-3 text-sm">
+
+            <span class="text-slate-400">
+              Item Name
+            </span>
+
+            <span class="font-semibold text-slate-700">
+              {{ selected.item }}
+            </span>
+
+          </div>
+
+        }
+
+        @if (selected.quantity !== undefined) {
+
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-3 text-sm">
+
+            <span class="text-slate-400">
+              Quantity
+            </span>
+
+            <span class="font-semibold text-slate-700">
+              {{ selected.quantity }}
+            </span>
+
+          </div>
+
+        }
+
+        @if (selected.unitPrice !== undefined) {
+
+          <div class="flex justify-between gap-4 border-b border-slate-100 pb-3 text-sm">
+
+            <span class="text-slate-400">
+              Estimated Unit Price
+            </span>
+
+            <span class="font-semibold text-slate-700">
+              {{ displayValue({ amount: selected.unitPrice }, 'amount') }}
+            </span>
+
+          </div>
+
+        }
+
+        @if (selected.justification) {
+
+          <div class="border-b border-slate-100 pb-3 text-sm">
+
+            <p class="text-slate-400 mb-1">
+              Justification
+            </p>
+
+            <p class="font-semibold text-slate-700">
+              {{ selected.justification }}
+            </p>
+
+          </div>
+
+        }
+
+      </div>
+
+      <!-- Approve / Reject -->
+      @if (module === 'approvals' && selected.status === 'Pending') {
+
+        <div class="flex gap-3 mt-6">
+
+          <button
+            type="button"
+            (click)="updateStatus(selected, 'Rejected')"
+            class="flex-1 rounded-xl bg-rose-50 text-rose-700 py-3 font-semibold hover:bg-rose-100">
+
+            Reject
+
+          </button>
+
+          <button
+            type="button"
+            (click)="updateStatus(selected, 'Approved')"
+            class="flex-1 rounded-xl bg-teal-600 text-white py-3 font-semibold hover:bg-teal-700">
+
+            Approve
+
+          </button>
+
+        </div>
+
+      }
+
+      <button
+        type="button"
+        (click)="selected = null"
+        class="mt-5 w-full rounded-xl border border-slate-200 py-3 text-sm font-semibold text-slate-600">
+
+        Close
+
+      </button>
+
+    </div>
+
+  </div>
+
+}
